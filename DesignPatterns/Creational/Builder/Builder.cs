@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.Creational.Builder
 {
+    /// <summary>
+    /// This is the Product created by the respective builders.
+    /// </summary>
     class HtmlElement
     {
         public string Name, Text;
@@ -46,17 +49,30 @@ namespace DesignPatterns.Creational.Builder
         }
     }
 
-    class HtmlBuilder
+    interface IHtmlBuilder
+    {
+        void AddChild(string childName, string childText);
+       
+        void Clear();
+        string ToString();
+    }
+
+    /// <summary>
+    /// This is an implementation of the Concrete Builder for the Product.
+    /// It is aware of the end product - HtmlElement and knows that 
+    /// the construction steps need to go in a certain order
+    /// </summary>
+    class HtmlBuilder : IHtmlBuilder
     {
         private readonly string rootName;
+        // Hide the constructors so that the public is forced to use
+        // the Builder.
         protected HtmlElement root = new HtmlElement();
-
         public HtmlBuilder(string rootName)
         {
             this.rootName = rootName;
             root.Name = rootName;
         }
-
         public void AddChild(string childName, string childText)
         {
             var e = new HtmlElement(childName, childText);
@@ -66,20 +82,16 @@ namespace DesignPatterns.Creational.Builder
         {
             return root.ToString();
         }
-
-        //public HtmlBuilder AddChildFluent(string childName, string childText)
-        //{
-        //    var e = new HtmlElement(childName, childText);
-        //    root.Elements.Add(e);
-        //    return this;
-        //}
+        public HtmlBuilder AddChildFluent(string childName, string childText)
+        {
+            var e = new HtmlElement(childName, childText);
+            root.Elements.Add(e);
+            return this;
+        }
         public void Clear()
         {
             root = new HtmlElement { Name = rootName };
         }
     }
 
-    class Builder
-    {
-    }
 }

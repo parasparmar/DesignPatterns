@@ -13,12 +13,23 @@ namespace DesignPatterns
 
         static void Main(string[] args)
         {
+            #region Simple Builder
             var builder = new HtmlBuilder("ul");
             builder.AddChild("li", "Paras");
-            builder.AddChild("li", "Pratik");
+            builder.AddChild("li", "Pratik"); ;
             builder.AddChild("li", "Ruby");
             WriteLine(builder.ToString());
-            Read();            
+            Read();
+            #endregion
+
+            #region Fluent Builder
+            var fluentbuilder = new HtmlBuilder("ul");
+            fluentbuilder.AddChildFluent("li", "Paras")
+                .AddChildFluent("li", "Pratik")
+                .AddChildFluent("li", "Ruby");
+            WriteLine(fluentbuilder.ToString());
+            Read();
+            #endregion
         }
     }
 }

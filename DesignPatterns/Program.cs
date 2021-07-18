@@ -13,21 +13,31 @@ namespace DesignPatterns
 
         static void Main(string[] args)
         {
-            #region Simple Builder
-            var builder = new HtmlBuilder("ul");
-            builder.AddChild("li", "Paras");
-            builder.AddChild("li", "Pratik"); ;
-            builder.AddChild("li", "Ruby");
-            WriteLine(builder.ToString());
-            Read();
-            #endregion
+            //#region Simple Builder
+            //var builder = new HtmlBuilder("ul");
+            //builder.AddChild("li", "Paras");
+            //builder.AddChild("li", "Pratik"); ;
+            //builder.AddChild("li", "Ruby");
+            //WriteLine(builder.ToString());
+            //Read();
+            //#endregion
 
-            #region Fluent Builder
-            var fluentbuilder = new HtmlBuilder("ul");
-            fluentbuilder.AddChildFluent("li", "Paras")
+            //#region Fluent Builder
+            //var fluentbuilder = new HtmlBuilder("ul");
+            //fluentbuilder.AddChildFluent("li", "Paras")
+            //    .AddChildFluent("li", "Pratik")
+            //    .AddChildFluent("li", "Ruby");
+            //WriteLine(fluentbuilder.ToString());
+            //Read();
+            //#endregion
+
+            #region Communicating Intent : Fluent Builder
+            var comm = HtmlElement
+                .Create("ul")
+                .AddChildFluent("li", "Paras")
                 .AddChildFluent("li", "Pratik")
                 .AddChildFluent("li", "Ruby");
-            WriteLine(fluentbuilder.ToString());
+            WriteLine(comm);
             Read();
             #endregion
         }

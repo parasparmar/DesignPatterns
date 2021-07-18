@@ -42,27 +42,21 @@ namespace DesignPatterns.Creational.Builder
             sb.Append($"{i}</{Name}>\n");
             return sb.ToString();
         }
-
         public override string ToString()
         {
             return ToStringImpl(0);
         }
+        // FactoryMethod : Create a static HTMLBuilder in the Product itself: HtmlElement.       
+        public static HtmlBuilder Create(string name) => new HtmlBuilder(name);
     }
 
-    interface IHtmlBuilder
-    {
-        void AddChild(string childName, string childText);
-       
-        void Clear();
-        string ToString();
-    }
 
     /// <summary>
     /// This is an implementation of the Concrete Builder for the Product.
     /// It is aware of the end product - HtmlElement and knows that 
     /// the construction steps need to go in a certain order
     /// </summary>
-    class HtmlBuilder : IHtmlBuilder
+    class HtmlBuilder 
     {
         private readonly string rootName;
         // Hide the constructors so that the public is forced to use
@@ -92,6 +86,8 @@ namespace DesignPatterns.Creational.Builder
         {
             root = new HtmlElement { Name = rootName };
         }
+
+        public static implicit operator HtmlElement(HtmlBuilder builder) => builder.root;
     }
 
 }
